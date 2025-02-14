@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                 //TODO("Not yet implemented")
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kryptopos-262315.web.app/?sessionId=${details.cartID}&status=${details.status}"))
                 startActivity(browserIntent)
-                finish()
+                finishAffinity()
             }
 
             override fun SocketStatus(connectivityCallback: GkashSoftPOSSDK.SocketConnectivityCallback?) {
@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
                 TODO("Not yet implemented")
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kryptopos-262315.web.app/?sessionId=${details?.cartID}&status=${details?.status}"))
                 startActivity(browserIntent)
-                finish()
+                finishAffinity()
             }
         })
         val requestDto = PaymentRequestDto()
@@ -94,7 +94,12 @@ class MainActivity : ComponentActivity() {
                 Log.e("request payment",e.message.toString())
             }
             delay(5000)
-            gkashSoftPOSSDK.queryTransactionStatus(sessionId);
+            try {
+                gkashSoftPOSSDK.queryTransactionStatus(sessionId);
+            } catch (e: Exception){
+                Log.e("request payment",e.message.toString())
+            }
+
         }
 
     }
